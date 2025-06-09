@@ -20,7 +20,7 @@ class TaskQueue {
         const item = this.queue.shift();
         if (item) {
             const { task, id } = item;
-            task(depth, () => this.start(depth + 1));
+            task(id, () => this.start(depth + 1));
         }
     }
 }
@@ -29,9 +29,5 @@ const task = (depth, next) => {
     console.log('The number of times a function was called recursively:', depth);
     next();
 };
-taskQueue.addTask(task);
-taskQueue.addTask(task);
-taskQueue.addTask(() => { });
-taskQueue.addTask(() => console.log('Running the last task!'));
+taskQueue.addTask((id) => console.log('Running a task with the ID:', id));
 taskQueue.start();
-console.log(taskQueue);

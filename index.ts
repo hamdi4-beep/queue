@@ -32,7 +32,7 @@ class TaskQueue {
         
         if (item) {
             const {task, id} = item
-            task(depth, () => this.start(depth + 1))
+            task(id, () => this.start(depth + 1))
         }
     }
 }
@@ -44,10 +44,8 @@ const task = (depth: number, next: Function) => {
     next()
 }
 
-taskQueue.addTask(task)
-taskQueue.addTask(task)
-taskQueue.addTask(() => {})
-taskQueue.addTask(() => console.log('Running the last task!'))
+taskQueue.addTask((id: number) =>
+    console.log('Running a task with the ID:', id)
+)
 
 taskQueue.start()
-console.log(taskQueue)
